@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import HotelList from './HotelList'; // Importe o componente HotelList
 
 
 
@@ -11,6 +12,7 @@ class HotelForm extends Component {
       estrelas: '',
       diaria: '',
       cidade: '',
+      hoteis: []
     };
   }
 
@@ -76,6 +78,8 @@ class HotelForm extends Component {
       });
   }
 
+  
+
 
 
   handleEditarHotel = (hotel) => {
@@ -83,10 +87,36 @@ class HotelForm extends Component {
     this.setState({ hotelParaEditar: hotel });
   }
 
+  
+
+  excluirHotel = (hotelId) => {
+    // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
+    axios
+      .delete(`http://localhost:5000/hoteis/${hotelId}`)
+      .then((response) => {
+        console.log(response.data); // Lida com a resposta do servidor
+
+        // Atualiza a lista de hotéis após a exclusão
+        this.atualizarListaHoteis();
+      })
+      .catch((error) => {
+        console.error(error); // Lida com erros de solicitação
+      });
+  };
+
+  atualizarListaHoteis = (hotelIdExcluido) => {
+    // Crie uma nova lista de hotéis excluindo o hotel com o hotelId especificado
+    const novaListaHoteis = this.state.hoteis.filter(
+      (hotel) => hotel.hotel_id !== hotelIdExcluido
+    );
+  
+    // Atualize o estado com a nova lista de hotéis
+    this.setState({ hoteis: novaListaHoteis });
+  };
+  
 
 
   
-
 
 
   render() {
@@ -129,6 +159,7 @@ class HotelForm extends Component {
           </div>
           <button type="submit">Adicionar Hotel</button>
         </form>
+        <HotelList hoteis={this.state.hoteis} onExcluirHotel={this.excluirHotel} />
       </div>
     );
   }
