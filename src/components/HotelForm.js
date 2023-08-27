@@ -87,7 +87,7 @@ class HotelForm extends Component {
     this.setState({ hotelParaEditar: hotel });
   }
 
-  
+
 
   excluirHotel = (hotelId) => {
     // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
@@ -97,26 +97,16 @@ class HotelForm extends Component {
         console.log(response.data); // Lida com a resposta do servidor
 
         // Atualiza a lista de hotéis após a exclusão
-        this.atualizarListaHoteis();
+        //this.atualizarListaHoteis(hotelId);
+        this.componentDidMount()
       })
       .catch((error) => {
         console.error(error); // Lida com erros de solicitação
       });
   };
 
-  atualizarListaHoteis = (hotelIdExcluido) => {
-    // Crie uma nova lista de hotéis excluindo o hotel com o hotelId especificado
-    const novaListaHoteis = this.state.hoteis.filter(
-      (hotel) => hotel.hotel_id !== hotelIdExcluido
-    );
-  
-    // Atualize o estado com a nova lista de hotéis
-    this.setState({ hoteis: novaListaHoteis });
-  };
-  
 
 
-  
 
 
   render() {
