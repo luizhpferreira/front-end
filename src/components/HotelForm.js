@@ -42,7 +42,7 @@ class HotelForm extends Component {
 
     // Enviar os dados do hotel ao servidor Flask usando uma solicitação POST
     axios
-      .post(`http://localhost:5000/hoteis/${nomeHotel}`, {
+      .post(`http://3.93.21.231:8501/hoteis/${nomeHotel}`, {
 
         nome: nomeHotel,
         estrelas: estrelas,
@@ -69,7 +69,7 @@ class HotelForm extends Component {
 
   componentDidMount() {
     // Faça uma solicitação GET para obter a lista de hotéis do servidor Flask
-    axios.get('http://localhost:5000/hoteis')
+    axios.get('http://3.93.21.231:8501/hoteis')
       .then(response => {
         this.setState({ hoteis: response.data.hoteis });
       })
@@ -92,7 +92,7 @@ class HotelForm extends Component {
   excluirHotel = (hotelId) => {
     // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
     axios
-      .delete(`http://localhost:5000/hoteis/${hotelId}`)
+      .delete(`http://3.93.21.231:8501/hoteis/${hotelId}`)
       .then((response) => {
         console.log(response.data); // Lida com a resposta do servidor
 
