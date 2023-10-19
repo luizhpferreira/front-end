@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Meu Aplicativo de Hotéis</h1>
+        <h1 style={{ marginLeft: '84vh' }}>Cadastro de Hotéis</h1>
         <HotelForm />
         
       </div>
