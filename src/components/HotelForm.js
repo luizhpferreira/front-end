@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import HotelList from './HotelList'; // Importe o componente HotelList
 import InputField from './InputField';
+import CadastroUsuario from './CadastroUsuario';
+import Login from './LoginForm';
+
+
+
+
 
 
 
@@ -13,6 +19,7 @@ class HotelForm extends Component {
       estrelas: '',
       diaria: '',
       cidade: '',
+      isLoginPage: true,
       hoteis: []
     };
   }
@@ -38,18 +45,26 @@ class HotelForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { nomeHotel, estrelas, diaria, cidade } = this.state;
+    const token = localStorage.getItem("token");
+    console.log(token)
 
 
 
     // Enviar os dados do hotel ao servidor Flask usando uma solicitação POST
     axios
-      .post(`http://localhost:5000/hoteis/${nomeHotel}`, {
-
-        nome: nomeHotel,
-        estrelas: estrelas,
-        diaria: diaria,
-        cidade: cidade,
-      })
+      .post(`http://localhost:5000/hoteis/${nomeHotel}`,
+      {
+          nome: nomeHotel,
+          estrelas: estrelas,
+          diaria: diaria,
+          cidade: cidade,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}` // Inclua o token no cabeçalho de autorização
+          }
+        }
+      )
       .then((response) => {
         // Lide com a resposta do servidor conforme necessário
         console.log(response.data);
@@ -88,12 +103,23 @@ class HotelForm extends Component {
     this.setState({ hotelParaEditar: hotel });
   }
 
+  handleCadastroSucesso = () => {
+    this.setState({ isLoginPage: true }); // Altera o estado para mostrar a tela de login
+  }
 
 
+  
   excluirHotel = (hotelId) => {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    
     // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
     axios
-      .delete(`http://localhost:5000/hoteis/${hotelId}`)
+      .delete(`http://localhost:5000/hoteis/${hotelId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })    
       .then((response) => {
         console.log(response.data); // Lida com a resposta do servidor
 
@@ -144,6 +170,13 @@ class HotelForm extends Component {
           </form>
           <HotelList hoteis={this.state.hoteis} onExcluirHotel={this.excluirHotel} />
         </div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40vh' }}>
+        <div>
+        {!this.state.isLoginPage && <CadastroUsuario onCadastroSucesso={this.handleCadastroSucesso} />}
+        {this.state.isLoginPage && <Login />}
+          {/* Restante do seu código... */}
+        </div>
+      </div>
       </div>
     );
   }
