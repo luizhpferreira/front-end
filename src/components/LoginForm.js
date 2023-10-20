@@ -30,9 +30,9 @@ class Login extends Component {
     .then((response) => {
       console.log(response.data);
       // Redirecionar ou fazer algo com a resposta do servidor, por exemplo, armazenar o token de autenticação
-      const token = "token_recebido_do_servidor";
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5Nzc2NjY2NiwianRpIjoiOTYwOTRkMjEtNGFjZC00Zjc3LTljMmEtYTM2MGZkN2E3ZDkyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTksIm5iZiI6MTY5Nzc2NjY2NiwiZXhwIjoxNjk3NzY3NTY2fQ.IrjavE-Gf74mQMCt8IhWwAEl5gfzfLrdfb8o6q1xGVQ';
       localStorage.setItem("token", token);
-      console.log(token)
+      
     })
     .catch((error) => {
       console.error(error);

@@ -11,6 +11,7 @@ import Login from './LoginForm';
 
 
 
+
 class HotelForm extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +47,7 @@ class HotelForm extends Component {
     event.preventDefault();
     const { nomeHotel, estrelas, diaria, cidade } = this.state;
     const token = localStorage.getItem("token");
-    console.log(token)
+    
 
 
 
@@ -111,14 +112,14 @@ class HotelForm extends Component {
   
   excluirHotel = (hotelId) => {
     const token = localStorage.getItem("token");
-    console.log(token)
+    
     
     // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
     axios
       .delete(`http://localhost:5000/hoteis/${hotelId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+         headers: {
+           Authorization: `Bearer ${token}`
+         }
       })    
       .then((response) => {
         console.log(response.data); // Lida com a resposta do servidor
