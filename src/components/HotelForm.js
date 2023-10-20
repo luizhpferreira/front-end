@@ -12,6 +12,7 @@ import Login from './LoginForm';
 
 
 
+
 class HotelForm extends Component {
   constructor(props) {
     super(props);
@@ -42,47 +43,46 @@ class HotelForm extends Component {
     this.setState({ cidade: event.target.value });
   }
 
-  // Manipulador de evento para enviar os dados do hotel ao servidor Flask
   handleSubmit = (event) => {
     event.preventDefault();
     const { nomeHotel, estrelas, diaria, cidade } = this.state;
-    const token = localStorage.getItem("token");
+
+    // Obtenha o token do localStorage
+    const token = localStorage.getItem('token');
     
 
-
-
     // Enviar os dados do hotel ao servidor Flask usando uma solicitação POST
-    axios
-      .post(`http://localhost:5000/hoteis/${nomeHotel}`,
+    axios.post(
+      `http://localhost:5000/hoteis/${nomeHotel}`,
       {
-          nome: nomeHotel,
-          estrelas: estrelas,
-          diaria: diaria,
-          cidade: cidade,
+        nome: nomeHotel,
+        estrelas: estrelas,
+        diaria: diaria,
+        cidade: cidade,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclua o token no cabeçalho de autorização
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}` // Inclua o token no cabeçalho de autorização
-          }
-        }
-      )
-      .then((response) => {
-        // Lide com a resposta do servidor conforme necessário
-        console.log(response.data);
+      }
+    )
+    .then((response) => {
+      // Lide com a resposta do servidor conforme necessário
+      console.log(response.data);
 
-        // Limpe o estado após o envio do formulário
-        this.setState({
-          nomeHotel: '',
-          estrelas: '',
-          diaria: '',
-          cidade: '',
-        });
-      })
-      .catch((error) => {
-        // Lide com erros de solicitação conforme necessário
-        console.error(error);
+      // Limpe o estado após o envio do formulário
+      this.setState({
+        nomeHotel: '',
+        estrelas: '',
+        diaria: '',
+        cidade: '',
       });
-  }
+    })
+    .catch((error) => {
+      // Lide com erros de solicitação conforme necessário
+      console.error(error);
+    });
+  };
 
   componentDidMount() {
     // Faça uma solicitação GET para obter a lista de hotéis do servidor Flask
@@ -111,18 +111,18 @@ class HotelForm extends Component {
 
   
   excluirHotel = (hotelId) => {
-    const token = localStorage.getItem("token");
+     const token = localStorage.getItem("token");
     
     
     // Enviar uma solicitação DELETE para o servidor Flask para excluir o hotel
     axios
       .delete(`http://localhost:5000/hoteis/${hotelId}`, {
-         headers: {
-           Authorization: `Bearer ${token}`
-         }
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
       })    
       .then((response) => {
-        console.log(response.data); // Lida com a resposta do servidor
+        //console.log(response.data); // Lida com a resposta do servidor
 
         // Atualiza a lista de hotéis após a exclusão
         //this.atualizarListaHoteis(hotelId);

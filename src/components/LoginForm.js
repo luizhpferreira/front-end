@@ -21,23 +21,29 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
-
+  
     // Enviar dados de login para o servidor Flask usando uma solicitação POST
     axios.post('http://localhost:5000/login', {
       username: username,
       password: password,
     })
     .then((response) => {
-      console.log(response.data);
-      // Redirecionar ou fazer algo com a resposta do servidor, por exemplo, armazenar o token de autenticação
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5Nzc2NjY2NiwianRpIjoiOTYwOTRkMjEtNGFjZC00Zjc3LTljMmEtYTM2MGZkN2E3ZDkyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MTksIm5iZiI6MTY5Nzc2NjY2NiwiZXhwIjoxNjk3NzY3NTY2fQ.IrjavE-Gf74mQMCt8IhWwAEl5gfzfLrdfb8o6q1xGVQ';
+      //console.log(response.data);
+      const token = response.data.access_token;
+  
+      // Armazene o token no localStorage
       localStorage.setItem("token", token);
       
+      
+  
+      // Agora, você pode redirecionar ou fazer outras ações com o token
+      // Exemplo: this.props.history.push('/alguma-rota');
     })
     .catch((error) => {
       console.error(error);
     });
   }
+  
 
   render() {
     return (
