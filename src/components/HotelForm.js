@@ -21,7 +21,7 @@ class HotelForm extends Component {
       estrelas: '',
       diaria: '',
       cidade: '',
-      isLoginPage: true,
+      isLoginPage: false,
       hoteis: []
     };
   }
