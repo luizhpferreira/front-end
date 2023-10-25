@@ -7,6 +7,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      loginSucesso: false
     };
   }
 
@@ -30,7 +31,7 @@ class Login extends Component {
     .then((response) => {
       //console.log(response.data);
       const token = response.data.access_token;
-  
+      this.setState({ loginSucesso: true, username: '', password: '' });
       // Armazene o token no localStorage
       localStorage.setItem("token", token);
       
@@ -59,6 +60,7 @@ class Login extends Component {
             <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
           </div>
           <button type="submit">Login</button>
+          {this.state.loginSucesso && <p>Login feito com sucesso!</p>}
         </form>
       </div>
     );
