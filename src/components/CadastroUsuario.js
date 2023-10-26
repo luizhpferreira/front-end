@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
+
 class CadastroUsuario extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,8 @@ class CadastroUsuario extends Component {
     this.setState({ telefone: event.target.value });
   }
 
+  
+
 
 
   
@@ -59,9 +62,17 @@ class CadastroUsuario extends Component {
     .then((response) => {
       console.log(response.data);
       this.setState({ cadastroSucesso: true });
+      setTimeout(() => {
+        // Redirecionar para a página de login
+        this.props.history.push('/login'); // Certifique-se de que o componente está dentro de uma rota para usar this.props.history
+        
+        // Chamar onCadastroSucesso se for uma função válida
+        if (typeof this.props.onCadastroSucesso === 'function') {
+          this.props.onCadastroSucesso();
+        }
+      }, 3000);
       
       // Redirecionar ou fazer algo com a resposta do servidor, por exemplo, mostrar uma mensagem de sucesso
-      this.props.onCadastroSucesso();
       
     })
     .catch((error) => {

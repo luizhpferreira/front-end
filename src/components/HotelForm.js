@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import HotelList from './HotelList'; // Importe o componente HotelList
 import InputField from './InputField';
-import CadastroUsuario from './CadastroUsuario';
-import Login from './LoginForm';
+//import CadastroUsuario from './CadastroUsuario';
+
 
 
 
@@ -21,7 +21,6 @@ class HotelForm extends Component {
       estrelas: '',
       diaria: '',
       cidade: '',
-      isLoginPage: false,
       hoteis: []
     };
   }
@@ -173,9 +172,6 @@ class HotelForm extends Component {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40vh' }}>
         <div>
-        {!this.state.isLoginPage && <CadastroUsuario onCadastroSucesso={this.handleCadastroSucesso} />}
-        {this.state.isLoginPage && <Login />}
-          {/* Restante do seu código... */}
         </div>
       </div>
       </div>

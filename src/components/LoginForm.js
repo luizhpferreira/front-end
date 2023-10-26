@@ -34,6 +34,7 @@ class Login extends Component {
       this.setState({ loginSucesso: true, username: '', password: '' });
       // Armazene o token no localStorage
       localStorage.setItem("token", token);
+      this.props.history.push('/hoteis');
       
       
   
